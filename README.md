@@ -31,6 +31,10 @@ Adds a beautiful animated snow effect to your VS Code editor.
 | `snowBackground.cursorStrength` | Cursor repulsion strength | `1.0` |
 | `snowBackground.windowsUsername` | Windows username (WSL) | Auto-detect |
 
+## Important
+
+**Before uninstalling this extension, you must disable it first** by running "Snow Background: Disable" from the Command Palette. This removes the injected code from VS Code. If you uninstall without disabling, the snow effect may persist or cause issues.
+
 ## Note
 
 After enabling, VS Code will show a "corrupted" warning. This is harmless — click the gear icon and select "Don't Show Again".

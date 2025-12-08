@@ -9,6 +9,9 @@ interface SnowConfig {
   opacity: number;
   wind: number;
   color: string;
+  cursorInteraction: boolean;
+  cursorRadius: number;
+  cursorStrength: number;
 }
 
 function generateSnowJS(config: SnowConfig): string {
@@ -31,13 +34,31 @@ function generateSnowJS(config: SnowConfig): string {
     maxOpacity: ${config.opacity},
     wind: ${config.wind},
     color: '${config.color}',
-    selectors: ${JSON.stringify(selectors)}
+    selectors: ${JSON.stringify(selectors)},
+    cursorInteraction: ${config.cursorInteraction},
+    repulsionRadius: ${config.cursorRadius},
+    repulsionStrength: ${config.cursorStrength}
   };
 
   const Doc = {
     canvases: new Map(),
-    animationFrames: new Map()
+    animationFrames: new Map(),
+    mouseX: -1000,
+    mouseY: -1000
   };
+
+  // Track global mouse position
+  if (CONFIG.cursorInteraction) {
+    document.addEventListener('mousemove', (e) => {
+      Doc.mouseX = e.clientX;
+      Doc.mouseY = e.clientY;
+    });
+
+    document.addEventListener('mouseleave', () => {
+      Doc.mouseX = -1000;
+      Doc.mouseY = -1000;
+    });
+  }
 
   function createFlake(canvas) {
     return {
@@ -48,7 +69,10 @@ function generateSnowJS(config: SnowConfig): string {
       opacity: Math.random() * CONFIG.maxOpacity + 0.1,
       wind: CONFIG.wind + (Math.random() - 0.5) * 0.5,
       wobble: Math.random() * Math.PI * 2,
-      wobbleSpeed: Math.random() * 0.02 + 0.01
+      wobbleSpeed: Math.random() * 0.02 + 0.01,
+      // Velocity for smoother repulsion
+      vx: 0,
+      vy: 0
     };
   }
 
@@ -104,10 +128,34 @@ function generateSnowJS(config: SnowConfig): string {
 
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+      // Get canvas position for mouse coordinate conversion
+      const canvasRect = canvas.getBoundingClientRect();
+      const localMouseX = Doc.mouseX - canvasRect.left;
+      const localMouseY = Doc.mouseY - canvasRect.top;
+
       flakes.forEach(flake => {
         // Update wobble for gentle swaying motion
         flake.wobble += flake.wobbleSpeed;
         const wobbleOffset = Math.sin(flake.wobble) * 0.5;
+
+        // Mouse repulsion
+        if (CONFIG.cursorInteraction) {
+          const dx = flake.x - localMouseX;
+          const dy = flake.y - localMouseY;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+
+          if (distance < CONFIG.repulsionRadius && distance > 0) {
+            const force = (1 - distance / CONFIG.repulsionRadius) * CONFIG.repulsionStrength;
+            flake.vx += (dx / distance) * force;
+            flake.vy += (dy / distance) * force;
+          }
+
+          // Apply velocity with damping
+          flake.x += flake.vx;
+          flake.y += flake.vy;
+          flake.vx *= 0.92;
+          flake.vy *= 0.92;
+        }
 
         ctx.beginPath();
         ctx.arc(flake.x, flake.y, flake.radius, 0, Math.PI * 2);
@@ -246,7 +294,10 @@ function getSnowConfig(): SnowConfig {
     speed: config.get<number>('speed') || 2,
     opacity: config.get<number>('opacity') || 0.6,
     wind: config.get<number>('wind') || 0.5,
-    color: config.get<string>('color') || '255, 255, 255'
+    color: config.get<string>('color') || '255, 255, 255',
+    cursorInteraction: config.get<boolean>('cursorInteraction') ?? true,
+    cursorRadius: config.get<number>('cursorRadius') || 60,
+    cursorStrength: config.get<number>('cursorStrength') || 1.5
   };
 }
 

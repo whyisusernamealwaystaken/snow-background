@@ -85,6 +85,25 @@
           "type": "string",
           "default": "255, 255, 255",
           "description": "Snow color in RGB format (e.g., '255, 255, 255' for white)"
+        },
+        "snowBackground.cursorInteraction": {
+          "type": "boolean",
+          "default": true,
+          "description": "Snowflakes are pushed aside by the mouse cursor"
+        },
+        "snowBackground.cursorRadius": {
+          "type": "number",
+          "default": 60,
+          "minimum": 20,
+          "maximum": 200,
+          "description": "Radius of cursor repulsion effect (in pixels)"
+        },
+        "snowBackground.cursorStrength": {
+          "type": "number",
+          "default": 1.0,
+          "minimum": 0.5,
+          "maximum": 10,
+          "description": "Strength of cursor repulsion force"
         }
       }
     }

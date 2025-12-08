@@ -7,6 +7,7 @@ Adds a beautiful animated snow effect to your VS Code editor.
 - Customizable snow on different areas (editor, sidebar, panel, terminal)
 - Adjustable speed, opacity, color, and wind direction
 - Gentle wobbling motion for realistic snowfall
+- Cursor interaction - snowflakes are pushed aside by your mouse
 - WSL2 support
 
 ## Usage
@@ -25,6 +26,9 @@ Adds a beautiful animated snow effect to your VS Code editor.
 | `snowBackground.opacity` | Snow opacity | `0.6` |
 | `snowBackground.wind` | Wind angle | `0.5` |
 | `snowBackground.color` | RGB color | `255, 255, 255` |
+| `snowBackground.cursorInteraction` | Enable cursor repulsion | `true` |
+| `snowBackground.cursorRadius` | Cursor repulsion radius (px) | `60` |
+| `snowBackground.cursorStrength` | Cursor repulsion strength | `1.0` |
 | `snowBackground.windowsUsername` | Windows username (WSL) | Auto-detect |
 
 ## Note

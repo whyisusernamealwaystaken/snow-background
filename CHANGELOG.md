@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.0.3
+- Release 
+
 ## 0.0.2
 - Added cursor interaction - snowflakes are pushed aside by the mouse cursor
 - Configurable repulsion radius and strength

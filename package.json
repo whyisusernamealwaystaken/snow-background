@@ -1,0 +1,102 @@
+{
+  "name": "snow-background",
+  "displayName": "Snow Background",
+  "description": "Animated snow effect for VS Code",
+  "version": "0.0.1",
+  "publisher": "tobe",
+  "icon": "images/icon.png",
+  "galleryBanner": {
+    "color": "#1e1e1e",
+    "theme": "dark"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/whyisusernamealwaystaken/snow-background"
+  },
+  "bugs": {
+    "url": "https://github.com/whyisusernamealwaystaken/snow-background/issues"
+  },
+  "homepage": "https://github.com/whyisusernamealwaystaken/snow-background#readme",
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "categories": ["Themes", "Other"],
+  "keywords": ["snow", "background", "animation", "theme", "aesthetic", "winter"],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "snow-background.enable",
+        "title": "Snow Background: Enable"
+      },
+      {
+        "command": "snow-background.disable",
+        "title": "Snow Background: Disable"
+      }
+    ],
+    "configuration": {
+      "title": "Snow Background",
+      "properties": {
+        "snowBackground.windowsUsername": {
+          "type": "string",
+          "default": "",
+          "description": "Your Windows username (required for WSL users). Leave empty for auto-detect on native Windows."
+        },
+        "snowBackground.areas": {
+          "type": "array",
+          "default": ["editor"],
+          "items": {
+            "type": "string",
+            "enum": ["editor", "sidebar", "panel", "activitybar", "fullscreen"]
+          },
+          "description": "Areas to show snow effect: editor, sidebar, panel, activitybar, or fullscreen"
+        },
+        "snowBackground.flakeCount": {
+          "type": "number",
+          "default": 100,
+          "description": "Number of snowflakes"
+        },
+        "snowBackground.speed": {
+          "type": "number",
+          "default": 2,
+          "minimum": 0.5,
+          "maximum": 10,
+          "description": "Base speed of snowflakes"
+        },
+        "snowBackground.opacity": {
+          "type": "number",
+          "default": 0.6,
+          "minimum": 0.05,
+          "maximum": 1,
+          "description": "Maximum opacity of snowflakes"
+        },
+        "snowBackground.wind": {
+          "type": "number",
+          "default": 0.5,
+          "minimum": -5,
+          "maximum": 5,
+          "description": "Wind angle (negative = left, positive = right)"
+        },
+        "snowBackground.color": {
+          "type": "string",
+          "default": "255, 255, 255",
+          "description": "Snow color in RGB format (e.g., '255, 255, 255' for white)"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:uninstall": "node -e \"const fs=require('fs'),os=require('os'),path=require('path');const paths=[];if(process.platform==='win32'){const l=process.env.LOCALAPPDATA||path.join(os.homedir(),'AppData','Local');paths.push(path.join(l,'Programs','Microsoft VS Code','resources','app','out','vs','workbench','workbench.desktop.main.js'),'C:\\\\Program Files\\\\Microsoft VS Code\\\\resources\\\\app\\\\out\\\\vs\\\\workbench\\\\workbench.desktop.main.js');}else if(process.platform==='linux'){try{if(fs.readFileSync('/proc/version','utf8').toLowerCase().includes('microsoft')){const u='/mnt/c/Users';if(fs.existsSync(u)){fs.readdirSync(u).filter(x=>!['Public','Default','Default User','All Users'].includes(x)&&!x.startsWith('.')).forEach(x=>paths.push('/mnt/c/Users/'+x+'/AppData/Local/Programs/Microsoft VS Code/resources/app/out/vs/workbench/workbench.desktop.main.js'));}paths.push('/mnt/c/Program Files/Microsoft VS Code/resources/app/out/vs/workbench/workbench.desktop.main.js');}}catch{}paths.push('/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js');}else if(process.platform==='darwin'){paths.push('/Applications/Visual Studio Code.app/Contents/Resources/app/out/vs/workbench/workbench.desktop.main.js');}paths.forEach(p=>{try{if(fs.existsSync(p)){let c=fs.readFileSync(p,'utf8');if(c.includes('SNOW-BACKGROUND-START')){c=c.replace(/\\/\\* SNOW-BACKGROUND-START \\*\\/[\\s\\S]*?\\/\\* SNOW-BACKGROUND-END \\*\\//g,'');fs.writeFileSync(p,c,'utf8');}}}catch{}});\"",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.80.0",
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0"
+  }
+}

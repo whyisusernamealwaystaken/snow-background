@@ -2,7 +2,7 @@
   "name": "snow-background",
   "displayName": "Snow Background",
   "description": "Animated snow effect for VS Code",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "publisher": "tobe",
   "icon": "images/icon.png",
   "galleryBanner": {

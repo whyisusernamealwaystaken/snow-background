@@ -21,6 +21,10 @@ Adds a beautiful animated snow effect to your VS Code editor.
 - After every VS Code update, you need to re-enable the extension as updates overwrite the modified files.
 - After enabling, VS Code will show a "corrupted" warning. This is harmless — click the gear icon and select "Don't Show Again".
 - **Before uninstalling**, you must disable the extension first by running "Snow Background: Disable". This removes the injected code from VS Code.
+- **macOS users**: If you get a permission error, run this in Terminal:
+  ```
+  sudo chown -R $(whoami) "/Applications/Visual Studio Code.app"
+  ```
 
 ## Settings
 

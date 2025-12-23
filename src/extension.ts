@@ -1,6 +1,7 @@
 import * as vscode from 'vscode';
 import * as fs from 'fs';
 import * as path from 'path';
+import * as os from 'os';
 
 interface SnowConfig {
   areas: string[];
@@ -365,6 +366,20 @@ export function activate(context: vscode.ExtensionContext) {
   const enableCmd = vscode.commands.registerCommand('snow-background.enable', async () => {
     try {
       const jsPath = getWorkbenchJSPath();
+
+      // Check write permissions before attempting
+      try {
+        fs.accessSync(jsPath, fs.constants.W_OK);
+      } catch {
+        if (os.platform() === 'darwin') {
+          vscode.window.showErrorMessage(
+            'Permission denied. Run in Terminal: sudo chown -R $(whoami) "/Applications/Visual Studio Code.app"'
+          );
+          return;
+        }
+        throw new Error(`No write permission to ${jsPath}`);
+      }
+
       let content = fs.readFileSync(jsPath, 'utf8');
 
       // Remove old snow code if exists
@@ -384,7 +399,13 @@ export function activate(context: vscode.ExtensionContext) {
         vscode.commands.executeCommand('workbench.action.reloadWindow');
       }
     } catch (err: any) {
-      vscode.window.showErrorMessage(`Failed to enable: ${err.message}`);
+      if (os.platform() === 'darwin' && (err.code === 'EACCES' || err.message.includes('permission'))) {
+        vscode.window.showErrorMessage(
+          'Permission denied. Run in Terminal: sudo chown -R $(whoami) "/Applications/Visual Studio Code.app"'
+        );
+      } else {
+        vscode.window.showErrorMessage(`Failed to enable: ${err.message}`);
+      }
     }
   });
 

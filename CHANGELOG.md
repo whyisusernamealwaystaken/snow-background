@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.0.6
+- Added macOS support with permission error handling and fix instructions
+
 ## 0.0.5
 - Updated README with notes about re-enabling after VS Code updates and disabling before uninstalling
 

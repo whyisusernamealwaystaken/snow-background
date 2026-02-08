@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.0.8
+- Fixed VS Code auto-healing modified workbench files by updating integrity checksums in product.json
+- Snow effect now persists across restarts and reloads
+
+## 0.0.7
+- Fixed compatibility with VS Code 1.100+ which moved installation files into a hash-named subdirectory
+- Updated uninstall cleanup script to handle the new directory layout
+
 ## 0.0.6
 - Added macOS support with permission error handling and fix instructions
 

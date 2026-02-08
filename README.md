@@ -45,7 +45,7 @@ Adds a beautiful animated snow effect to your VS Code editor.
 
 MIT License
 
-Copyright (c) 2024 Tobias Hönel
+Copyright (c) 2026 Tobias Hönel
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
